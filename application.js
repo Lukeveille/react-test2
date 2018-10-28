@@ -7,10 +7,15 @@ class Counter extends React.Component{
   componentDidMount(){
       //updating state
       this.setState((prevState, props) => {
-          return {message: prevState.message + '!'}
+        return {message: prevState.message + '!'}
       })
   }
   render(){
-      return <div>Message:{this.state.message}</div>
+      return <div>Message: {this.state.message}</div>
   }
 }
+
+ReactDOM.render(
+  <Counter/>,
+  document.getElementById("root")
+)
