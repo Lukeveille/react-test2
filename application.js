@@ -1,11 +1,16 @@
-class Welcome extends React.Component{
-  render(){
-    return <h1>Hello World!</h1>
+class Counter extends React.Component{
+  constructor(props){
+      super(props)
+      //initial state set up
+      this.state = {message:"initial message"}
   }
-} 
-
-//renders <h1>Hello World!</h1>
-ReactDOM.render(
-  <Welcome/>,
-  document.getElementById("root")
-)
+  componentDidMount(){
+      //updating state
+      this.setState((prevState, props) => {
+          return {message: prevState.message + '!'}
+      })
+  }
+  render(){
+      return <div>Message:{this.state.message}</div>
+  }
+}
