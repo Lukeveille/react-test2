@@ -1,3 +1,4 @@
+// Setup board.
 function Circle(props){
   var color = "white"
   if (props.cell == 1){
@@ -23,7 +24,7 @@ function Cell(props){
     backgroundColor: "yellow"
   }
   return (
-    <div style = {style} onClick = {() => props.handleClick(props.row,props.col)}>
+    <div style = {style} onClick = {() => props.handleClick(props.row, props.col)}>
         <Circle cell = {props.cell}/>
     </div>
   );
@@ -52,6 +53,7 @@ function Board(props) {
   )
 }
 
+// Main Game class and application.
 class Game extends React.Component {
   constructor(props) {
     super(props)
@@ -80,46 +82,46 @@ class Game extends React.Component {
     return -1;
   }
   // Victory logic.
-  checkDiagonal(row,col){
-    //find right and left tops
-    var c = this.state.cells;
-    var val = this.state.player? 2:1;
-    var rR = row;
-    var cR = col;
+  // checkDiagonal(row,col){
+  //   //find right and left tops
+  //   var c = this.state.cells;
+  //   var val = this.state.player? 2:1;
+  //   var rR = row;
+  //   var cR = col;
     
-    while(rR < 5 && cR < 6){
-      rR++; 
-      cR++;
-    }
+  //   while(rR < 5 && cR < 6){
+  //     rR++; 
+  //     cR++;
+  //   }
 
-    while( rR >= 3 && cR >= 3){
-      if(c[rR][cR] == val && c[rR-1][cR-1] == val && c[rR-2][cR-2] == val && c[rR-3][cR-3] == val){
-        return 1
-      }
-      rR--
-      cR--
-    }   
+  //   while( rR >= 3 && cR >= 3){
+  //     if(c[rR][cR] == val && c[rR-1][cR-1] == val && c[rR-2][cR-2] == val && c[rR-3][cR-3] == val){
+  //       return 1
+  //     }
+  //     rR--
+  //     cR--
+  //   }   
 
-    var rL = row;
-    var cL = col;
+  //   var rL = row;
+  //   var cL = col;
 
-    while(rL < 5 && cL > 0){
-      rL++
-      cL--
-    }
+  //   while(rL < 5 && cL > 0){
+  //     rL++
+  //     cL--
+  //   }
 
-    while(rL >= 3 && cL <= 3){
-      if(c[rL][cL] == val && c[rL-1][cL+1] == val && c[rL-2][cL+2] == val && c[rL-3][cL+3] == val){
-        return 1;
-      }
-      rL--
-      cL++
-    }
-    return 0;
-  }
+  //   while(rL >= 3 && cL <= 3){
+  //     if(c[rL][cL] == val && c[rL-1][cL+1] == val && c[rL-2][cL+2] == val && c[rL-3][cL+3] == val){
+  //       return 1;
+  //     }
+  //     rL--
+  //     cL++
+  //   }
+  //   return 0;
+  // }
   checkHorizontal(row,col){
     var c = this.state.cells;
-    var i = 6;
+    var i = col;
     var val = this.state.player? 2:1;
 
     while( i >= 3){
@@ -135,16 +137,19 @@ class Game extends React.Component {
     var i = row;
     var val = this.state.player? 2:1;
 
-    if( i >= 3) {
-      if (c[i][col] == val && c[i-1][col] == val && c[i-2][col] == val && c[i-3][col] == val) {
+    while( i < 4) {
+      console.log(c)
+      if (c[i][col] == val && c[i+1][col] == val && c[i+2][col] == val && c[i+3][col] == val) {
         return 1
       }
     }
     return 0
   }
   checkVictory(row,col){
-    return this.checkVertical(row,col) || this.checkHorizontal(row,col) || this.checkDiagonal(row,col);
+    return this.checkVertical(row,col) || this.checkHorizontal(row,col)// || this.checkDiagonal(row,col);
   }
+
+  // Controls.
   restart(){
     var cells = [];
     for(let i = 0; i < 7; i++ ){
@@ -152,12 +157,10 @@ class Game extends React.Component {
     }
     this.setState({ player : false, cells : cells, winner:0});
   }
-
   handleClick(row, col) {
     if (this.state.winner)
       return
     console.log("row: " + row + " | col: " + col);
-    console.log(this.state.cells);
     var temp = [];
     for (let i = 0; i < 7; i++) {
       temp.push(this.state.cells[i].slice());
