@@ -50,7 +50,7 @@ function Board(props) {
     rows.push(<Row key = {i} row = {i} cells={props.cells[i]} handleClick = {props.handleClick}/>)
   }
   return (
-    <div>{rows}</div>
+    <div id='board'>{rows}</div>
   )
 }
 
@@ -75,7 +75,7 @@ class Game extends React.Component {
   
   // Game logic.
   findAvailableRow(col) {
-    for (var i = 6; 0 <= i; i--) {
+    for (var i = 0; i < 7; i++) {
       if (this.state.cells[i][col] === 0) {
         return i;
       }
@@ -90,13 +90,13 @@ class Game extends React.Component {
     var rR = row;
     var cR = col;
     
-    while(rR < 5 && cR < 6){
+    while (rR < 5 && cR < 6){
       rR++; 
       cR++;
     }
 
-    while( rR >= 3 && cR >= 3){
-      if(c[rR][cR] === val && c[rR-1][cR-1] === val && c[rR-2][cR-2] === val && c[rR-3][cR-3] === val){
+    while (rR >= 3 && cR >= 3){
+      if (c[rR][cR] === val && c[rR-1][cR-1] === val && c[rR-2][cR-2] === val && c[rR-3][cR-3] === val){
         return 1
       }
       rR--
@@ -106,13 +106,13 @@ class Game extends React.Component {
     var rL = row;
     var cL = col;
 
-    while(rL < 5 && cL > 0){
+    while (rL < 5 && cL > 0){
       rL++
       cL--
     }
 
-    while(rL >= 3 && cL <= 3){
-      if(c[rL][cL] === val && c[rL-1][cL+1] === val && c[rL-2][cL+2] === val && c[rL-3][cL+3] === val){
+    while (rL >= 3 && cL <= 3){
+      if (c[rL][cL] === val && c[rL-1][cL+1] === val && c[rL-2][cL+2] === val && c[rL-3][cL+3] === val){
         return 1;
       }
       rL--
@@ -133,21 +133,21 @@ class Game extends React.Component {
     }
     return 0
   }
-  checkVertical(row,col){
+  checkVertical(row, col){
     var c = this.state.cells;
     var i = row;
     var val = this.state.player? 2:1;
 
-    while( i < 4) {
+    while( i >= 3) {
       console.log(c)
-      if (c[i][col] == val && c[i+1][col] == val && c[i+2][col] == val && c[i+3][col] == val) {
+      if (c[i][col] == val && c[i-1][col] == val && c[i-2][col] == val && c[i-3][col] == val) {
         return 1
       }
       i--
     }
     return 0
   }
-  checkVictory(row,col){
+  checkVictory(row, col){
     return this.checkVertical(row,col) || this.checkHorizontal(row,col) || this.checkDiagonal(row,col);
   }
 
