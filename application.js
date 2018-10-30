@@ -20,7 +20,7 @@ function Cell(props) {
   var style = {
     height: 70,
     width: 70,
-    border: "1px solid #000",
+    outline: "1px solid",
     backgroundColor: "yellow",
   }
   return (
@@ -36,7 +36,11 @@ function Row(props) {
   }
   var cells = [];
   for (let i = 0; i < 7; i++) {
-    cells.push(<Cell key = {i} cell = {props.cells[i]} row = {props.row} col = {i} handleClick = {props.handleClick}/>)
+    var cell = <Cell key = {i} cell = {props.cells[i]} row = {props.row} col = {i} handleClick = {props.handleClick}/>;
+    if (i === 0) {
+      cell.className = 'left';
+    }
+    cells.push(cell)
   }
   return (
     <div className='gameRow' style={style}>
